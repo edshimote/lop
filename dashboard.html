@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área do Aluno | AURA+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dash-body">
+  <div class="noise"></div>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="index.html"><span class="logo-mark">A</span><b>AURA+</b></a>
+    <a class="active" href="#accountPanel">Visão geral</a>
+    <a href="#profilePanel">Perfil</a>
+    <a href="#onboarding">Diagnóstico</a>
+    <a href="#studentPlan">Minha rota</a>
+    <a href="#routeModules">Módulos</a>
+    <button class="btn ghost" id="logout">Sair</button>
+  </aside>
+
+  <button class="mobile-dash-menu" id="dashMenu" aria-label="Abrir menu">Menu</button>
+
+  <main class="dashboard">
+    <section id="accountPanel" class="account-panel reveal">
+      <div>
+        <p class="eyebrow">Conta ativa</p>
+        <h1>Bem-vindo, <span id="studentName">Aluno</span>.</h1>
+        <p class="subtitle">Seu acesso foi liberado por chave. A duração depende do tipo de key ativada.</p>
+      </div>
+      <div class="account-card">
+        <span id="accountPlan">Key</span>
+        <b id="accountStatus">Ativo</b>
+        <small id="accountExpire">Expira em: --</small>
+      </div>
+    </section>
+
+    <section class="quick-stats reveal">
+      <article><span>Progresso</span><b id="progressPercent">0%</b></article>
+      <article><span>Aulas feitas</span><b id="lessonCount">0/0</b></article>
+      <article><span>Rota</span><b id="routeShort">Pendente</b></article>
+    </section>
+
+    <section id="profilePanel" class="profile-panel reveal">
+      <div class="profile-head">
+        <div>
+          <p class="eyebrow">Perfil</p>
+          <h2>Dados do aluno</h2>
+          <p>Informações salvas na sua conta e no diagnóstico ativo.</p>
+        </div>
+        <button class="btn secondary" id="profileRedo" type="button">Atualizar diagnóstico</button>
+      </div>
+      <div class="profile-grid">
+        <article><span>Nome</span><b id="profileName">--</b></article>
+        <article><span>Email</span><b id="profileEmail">--</b></article>
+        <article><span>Plano</span><b id="profilePlan">--</b></article>
+        <article><span>Status</span><b id="profileStatus">--</b></article>
+        <article><span>Key</span><b id="profileKey">--</b></article>
+        <article><span>Validade</span><b id="profileValidity">--</b></article>
+        <article><span>Ativada em</span><b id="profileActivated">--</b></article>
+        <article><span>Perfil</span><b id="profileGender">--</b></article>
+        <article><span>Biotipo</span><b id="profileBiotype">--</b></article>
+        <article><span>Medidas</span><b id="profileMeasures">--</b></article>
+        <article><span>Objetivo</span><b id="profileGoal">--</b></article>
+      </div>
+    </section>
+
+    <section id="welcomeFlow" class="welcome-flow reveal hidden" aria-live="polite">
+      <div class="welcome-mark"><span>A</span></div>
+      <p class="eyebrow">AURA+ liberado</p>
+      <h1>Bem-vindo ao seu diagnóstico.</h1>
+      <p class="subtitle">Antes de começar, escolha seu perfil para o sistema adaptar as imagens e perguntas.</p>
+      <div class="gender-choice" aria-label="Escolha seu gênero">
+        <button class="choice-card gender-card female" type="button" data-gender="female">
+          <span class="gender-symbol">♀</span>
+          <b>Mulher</b>
+          <small>Usar referências femininas</small>
+        </button>
+        <button class="choice-card gender-card male" type="button" data-gender="male">
+          <span class="gender-symbol">♂</span>
+          <b>Homem</b>
+          <small>Usar referências masculinas</small>
+        </button>
+      </div>
+    </section>
+
+    <section id="onboarding" class="onboarding-panel reveal hidden">
+      <p class="eyebrow">Diagnóstico inicial</p>
+      <h1>Monte seu caminho.</h1>
+      <p class="subtitle">Responda por partes. Depois do cálculo, o sistema indica o melhor caminho e libera sua rota.</p>
+
+      <form id="profileForm" class="profile-form">
+        <input id="gender" type="hidden" required />
+        <input id="biotype" type="hidden" required />
+        <input id="bodyType" type="hidden" required />
+        <input id="experience" type="hidden" required />
+        <input id="trainingDays" type="hidden" required />
+        <input id="sleep" type="hidden" required />
+        <input id="goal" type="hidden" required />
+        <input id="time" type="hidden" required />
+        <input id="styleFocus" type="hidden" required />
+
+        <div class="quiz-progress">
+          <div>
+            <span>Pergunta <b id="currentQuestion">1</b> de <b id="totalQuestions">13</b></span>
+            <small id="questionHint">Começando pelo básico.</small>
+          </div>
+          <div class="quiz-bar"><span id="quizBar"></span></div>
+        </div>
+
+        <div class="question-step active" data-step="1" data-hint="Começando pelo básico.">
+          <p class="step-kicker">Pergunta 01</p>
+          <h2>Qual é seu peso atual?</h2>
+          <p class="question-subtitle">Use seu peso aproximado em kg.</p>
+          <label class="solo-field"><span>kg</span><input id="weight" type="number" min="30" max="250" placeholder="Ex: 72" required /></label>
+          <button class="btn primary full next-step" type="button" data-next-step="2">Continuar</button>
+        </div>
+
+        <div class="question-step" data-step="2" data-hint="Agora sua altura.">
+          <p class="step-kicker">Pergunta 02</p>
+          <h2>Qual sua altura?</h2>
+          <p class="question-subtitle">Coloque em centímetros.</p>
+          <label class="solo-field"><span>cm</span><input id="height" type="number" min="120" max="230" placeholder="Ex: 175" required /></label>
+          <div class="step-actions"><button class="btn secondary" type="button" data-prev-step="1">Voltar</button><button class="btn primary" type="button" data-next-step="3">Continuar</button></div>
+        </div>
+
+        <div class="question-step" data-step="3" data-hint="Idade ajuda a calibrar a rota.">
+          <p class="step-kicker">Pergunta 03</p>
+          <h2>Qual sua idade?</h2>
+          <p class="question-subtitle">Isso ajuda a montar uma rotina mais realista.</p>
+          <label class="solo-field"><span>anos</span><input id="age" type="number" min="12" max="80" placeholder="Ex: 18" required /></label>
+          <div class="step-actions"><button class="btn secondary" type="button" data-prev-step="2">Voltar</button><button class="btn primary" type="button" data-next-step="4">Continuar</button></div>
+        </div>
+
+        <div class="question-step" data-step="4" data-hint="Última medida rápida.">
+          <p class="step-kicker">Pergunta 04</p>
+          <h2>Cintura aproximada?</h2>
+          <p class="question-subtitle">Pode ser aproximado. Use centímetros.</p>
+          <label class="solo-field"><span>cm</span><input id="waist" type="number" min="45" max="180" placeholder="Ex: 82" required /></label>
+          <div class="step-actions"><button class="btn secondary" type="button" data-prev-step="3">Voltar</button><button class="btn primary" type="button" data-next-step="5">Continuar</button></div>
+        </div>
+
+        <div class="question-step" data-step="5" data-hint="Escolha pela imagem mais parecida.">
+          <p class="step-kicker">Pergunta 05</p>
+          <h2>Você é Ecto, Meso ou Endo?</h2>
+          <p class="question-subtitle">Escolha a imagem que mais parece com sua estrutura hoje.</p>
+          <div class="body-type-grid choice-grid" id="bodyTypeCards" data-target="biotype" aria-label="Escolha seu biotipo">
+            <button class="choice-card body-type-card" type="button" data-biotype="ecto" data-choice-target="biotype" data-choice-value="ecto"><span class="body-photo ecto"></span><b>Ectomorfo</b><small>Mais magro, ganha massa com dificuldade</small></button>
+            <button class="choice-card body-type-card" type="button" data-biotype="meso" data-choice-target="biotype" data-choice-value="meso"><span class="body-photo meso"></span><b>Mesomorfo</b><small>Mais atlético, ganha e define com equilíbrio</small></button>
+            <button class="choice-card body-type-card" type="button" data-biotype="endo" data-choice-target="biotype" data-choice-value="endo"><span class="body-photo endo"></span><b>Endomorfo</b><small>Estrutura mais larga, ganha peso com facilidade</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="4">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="6" data-hint="Agora como você se vê.">
+          <p class="step-kicker">Pergunta 06</p>
+          <h2>Como você se vê hoje?</h2>
+          <div class="choice-grid option-grid" data-target="bodyType">
+            <button class="choice-card option-card" type="button" data-choice-target="bodyType" data-choice-value="magro"><b>Magro</b><small>Preciso ganhar presença física</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="bodyType" data-choice-value="medio"><b>Médio</b><small>Quero definir e alinhar</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="bodyType" data-choice-value="acima"><b>Acima do peso</b><small>Quero emagrecer com saúde</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="5">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="7" data-hint="Experiência muda a intensidade.">
+          <p class="step-kicker">Pergunta 07</p>
+          <h2>Qual sua experiência com treino?</h2>
+          <div class="choice-grid option-grid" data-target="experience">
+            <button class="choice-card option-card" type="button" data-choice-target="experience" data-choice-value="iniciante"><b>Iniciante</b><small>Estou começando ou voltei agora</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="experience" data-choice-value="intermediario"><b>Intermediário</b><small>Já treino, mas quero organizar melhor</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="experience" data-choice-value="avancado"><b>Avançado</b><small>Já tenho rotina consistente</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="6">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="8" data-hint="Sua frequência atual.">
+          <p class="step-kicker">Pergunta 08</p>
+          <h2>Treina quantos dias por semana?</h2>
+          <div class="choice-grid option-grid" data-target="trainingDays">
+            <button class="choice-card option-card" type="button" data-choice-target="trainingDays" data-choice-value="0"><b>0</b><small>Ainda não treino</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="trainingDays" data-choice-value="2"><b>1 a 2</b><small>Consigo pouco por semana</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="trainingDays" data-choice-value="4"><b>3 a 4</b><small>Tenho uma boa base</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="trainingDays" data-choice-value="5"><b>5+</b><small>Treino quase sempre</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="7">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="9" data-hint="Sono pesa muito no resultado.">
+          <p class="step-kicker">Pergunta 09</p>
+          <h2>Como está seu sono?</h2>
+          <div class="choice-grid option-grid" data-target="sleep">
+            <button class="choice-card option-card" type="button" data-choice-target="sleep" data-choice-value="baixo"><b>Baixo</b><small>Menos de 6h por noite</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="sleep" data-choice-value="medio"><b>Médio</b><small>6h a 7h por noite</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="sleep" data-choice-value="bom"><b>Bom</b><small>8h ou mais</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="8">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="10" data-hint="Agora o objetivo principal.">
+          <p class="step-kicker">Pergunta 10</p>
+          <h2>Qual é seu objetivo principal?</h2>
+          <div class="choice-grid option-grid" data-target="goal">
+            <button class="choice-card option-card" type="button" data-choice-target="goal" data-choice-value="massa"><b>Ganhar massa</b><small>Quero mais volume e presença</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="goal" data-choice-value="definicao"><b>Definir</b><small>Quero ficar mais alinhado</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="goal" data-choice-value="emagrecer"><b>Emagrecer</b><small>Quero reduzir com saúde</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="goal" data-choice-value="estilo"><b>Aparência</b><small>Quero melhorar visual e estilo</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="9">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="11" data-hint="Tempo define o tamanho da rotina.">
+          <p class="step-kicker">Pergunta 11</p>
+          <h2>Quanto tempo você tem por dia?</h2>
+          <div class="choice-grid option-grid" data-target="time">
+            <button class="choice-card option-card" type="button" data-choice-target="time" data-choice-value="15"><b>15 min</b><small>Rotina bem curta</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="time" data-choice-value="30"><b>30 min</b><small>Consigo um bloco bom</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="time" data-choice-value="45"><b>45+ min</b><small>Tenho mais espaço</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="10">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="12" data-hint="Visual também entra no cálculo.">
+          <p class="step-kicker">Pergunta 12</p>
+          <h2>O que mais pesa no visual hoje?</h2>
+          <div class="choice-grid option-grid" data-target="styleFocus">
+            <button class="choice-card option-card" type="button" data-choice-target="styleFocus" data-choice-value="pele"><b>Pele e cabelo</b><small>Cuidado, higiene e presença</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="styleFocus" data-choice-value="roupa"><b>Roupas</b><small>Caimento e combinações</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="styleFocus" data-choice-value="postura"><b>Postura</b><small>Fotos, confiança e linguagem corporal</small></button>
+            <button class="choice-card option-card" type="button" data-choice-target="styleFocus" data-choice-value="fisico"><b>Físico</b><small>Treino e alimentação</small></button>
+          </div>
+          <button class="btn secondary" type="button" data-prev-step="11">Voltar</button>
+        </div>
+
+        <div class="question-step" data-step="13" data-hint="Última pergunta antes do resultado.">
+          <p class="step-kicker">Pergunta 13</p>
+          <h2>Qual sua maior dificuldade hoje?</h2>
+          <p class="question-subtitle">Escreva curto. Exemplo: rotina, alimentação, postura, estilo.</p>
+          <label><textarea id="difficulty" placeholder="Ex: rotina, alimentação, postura, estilo..."></textarea></label>
+          <div class="step-actions"><button class="btn secondary" type="button" data-prev-step="12">Voltar</button><button class="btn primary" type="submit">Carregar resultado</button></div>
+        </div>
+        <p class="safe-note">Conteúdo educativo. Para dor, dieta rígida ou condição médica, procure um profissional.</p>
+      </form>
+    </section>
+
+
+    <section id="calculationFlow" class="calculation-flow hidden reveal" aria-live="polite">
+      <div class="welcome-mark"><span>A</span></div>
+      <p class="eyebrow">Calculando</p>
+      <h1>Carregando seu resultado.</h1>
+      <p class="subtitle">Analisando medidas, biotipo, rotina e objetivo para montar o melhor caminho.</p>
+      <div class="welcome-loader"><span></span></div>
+    </section>
+    <section id="studentPlan" class="student-plan hidden reveal">
+      <div class="plan-header">
+        <div>
+          <p class="eyebrow">Área liberada</p>
+          <h1 id="planTitle">Sua etapa</h1>
+          <p class="subtitle" id="planSubtitle"></p>
+          <div class="access-pill"><b id="accessName">Basic</b><span>Validade: <b id="accessExpiry">--</b></span></div>
+        </div>
+        <button class="btn secondary" id="redoProfile">Refazer diagnóstico</button>
+      </div>
+
+      <div class="result-card">
+        <div><span class="tag" id="profileTag">Perfil</span><h2 id="routeName"></h2><p id="routeDescription"></p></div>
+        <div class="score-box"><small>IMC estimado</small><strong id="bmiValue">--</strong><span id="bmiLabel">---</span></div>
+      </div>
+
+      <div class="best-result">
+        <div>
+          <p class="eyebrow">Melhor caminho</p>
+          <h2 id="bestChoice">Seu foco ideal</h2>
+          <p id="bestReason"></p>
+        </div>
+        <div class="result-parts" id="resultParts"></div>
+      </div>
+
+      <div class="deep-results" id="deepResults"></div>
+
+      <div class="weekly-panel">
+        <div>
+          <p class="eyebrow">Plano da semana</p>
+          <h2>3 ações para começar</h2>
+        </div>
+        <div id="weeklyChecklist" class="checklist"></div>
+      </div>
+
+      <h2 class="module-title">Seus módulos</h2>
+      <p class="unlock-note" id="unlockNote">Um novo módulo libera por dia.</p>
+      <div class="grid modules dash-grid" id="routeModules"></div>
+    </section>
+  </main>
+
+  <dialog id="lessonModal">
+    <form method="dialog" class="modal lesson-modal">
+      <button class="close" value="cancel" aria-label="Fechar">×</button>
+      <p class="eyebrow" id="lessonKicker">Aula</p>
+      <h2 id="lessonTitle">Título da aula</h2>
+      <p id="lessonDescription"></p>
+      <div id="lessonBullets" class="lesson-bullets"></div>
+      <button type="button" class="btn primary full" id="completeLesson">Marcar como concluída</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
